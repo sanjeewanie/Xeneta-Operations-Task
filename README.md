@@ -1,2 +1,0 @@
-# Xeneta Operations Task
-
