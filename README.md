@@ -1,7 +1,8 @@
-#README
 
 Get the clone from the repository using below command
+  ```
   git clone https://github.com/sanjeewanie/Xeneta-Operations-Task.git
+  ```
   
 Make sure your developemnt envirentment have below apllications up and running.
   Docker
