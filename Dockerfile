@@ -37,19 +37,18 @@ RUN    /etc/init.d/postgresql start &&\
     psql -h localhost -U postgres < db/rates.sql && \
     psql -h localhost -U postgres -c "SELECT 'alive'"
 
-
+#switch back to application user to run application
 USER worker
 ENV PATH="/home/worker/.local/bin:${PATH}"
 WORKDIR /home/worker
 
 COPY rates/ .
-RUN  ls -al
+#RUN  ls -al
 
 # Open port 3000 for serving the webpage
 
 EXPOSE 3000 
 
 CMD ["gunicorn" , "--bind", "localhost:3000" , "wsgi"]
-
 
 
