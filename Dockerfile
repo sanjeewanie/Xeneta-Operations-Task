@@ -24,7 +24,7 @@ RUN  pip install --user gunicorn
 COPY --chown=worker:worker . .
 
 
-# install postgresql using root user , given instruction in shell script
+# install postgresql using root user , given instruction in "postgres_install.sh" shell script
 COPY script/ .
 USER root
 RUN  chmod a+w ./ -R
@@ -32,10 +32,12 @@ RUN ./postgres_install.sh
 
 #start postgresql and create postgresql app user with given username and password
 RUN    /etc/init.d/postgresql start &&\
+    psql --command "SELECT 'alive'" && \
     psql --command "CREATE USER postgres WITH SUPERUSER PASSWORD 'postgres';" &&\
-    createdb -O postgres postgres && \
+    psql --command "createdb rates" && \
+    psql --command "\c mytestdb" && \
     psql -h localhost -U postgres < db/rates.sql && \
-    psql -h localhost -U postgres -c "SELECT 'alive'"
+   
 
 #switch back to application user to run application
 USER worker
